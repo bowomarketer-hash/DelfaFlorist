@@ -1,0 +1,1031 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Delfa Florist — Curated Blooms for Unforgettable Moments</title>
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  
+  <!-- FontAwesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            rose: {
+              50: '#fff5f5',
+              100: '#ffe3e5',
+              200: '#ffd0d5',
+              300: '#fca5af',
+              400: '#f87185',
+              500: '#e11d48',
+              800: '#9f1239',
+              900: '#881337',
+            },
+            petal: '#FDF7F4',
+            sage: {
+              50: '#f4f7f4',
+              100: '#e5ece4',
+              200: '#cbdac9',
+              500: '#698269',
+              700: '#435743',
+              800: '#324232',
+            },
+            cream: '#FAF6F0',
+            champagne: '#E8D5C4',
+            gold: '#D4AF37'
+          },
+          fontFamily: {
+            serif: ['"Playfair Display"', 'Georgia', 'serif'],
+            sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    /* Custom Botanical & Petal Animations */
+    @keyframes floatSlow {
+      0%, 100% { transform: translateY(0px) rotate(0deg); }
+      50% { transform: translateY(-10px) rotate(2deg); }
+    }
+    @keyframes pulseSoft {
+      0%, 100% { opacity: 0.6; transform: scale(1); }
+      50% { opacity: 0.9; transform: scale(1.05); }
+    }
+    .animate-float {
+      animation: floatSlow 6s ease-in-out infinite;
+    }
+    .glass-card {
+      background: rgba(255, 255, 255, 0.75);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 235, 235, 0.8);
+    }
+    .glass-nav {
+      background: rgba(250, 246, 240, 0.88);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+    }
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #FAF6F0;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #cbdac9;
+      border-radius: 4px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #698269;
+    }
+  </style>
+</head>
+<body class="bg-cream text-neutral-800 font-sans selection:bg-rose-200 selection:text-rose-900 relative overflow-x-hidden min-h-screen">
+
+  <!-- Interactive Petal Canvas Background -->
+  <canvas id="petalCanvas" class="fixed inset-0 pointer-events-none z-10 w-full h-full"></canvas>
+
+  <header class="fixed top-0 left-0 right-0 z-40 glass-nav border-b border-rose-100/60 transition-all duration-300">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+      <!-- Brand Logo -->
+      <a href="#" class="flex items-center gap-3 group">
+        <div class="w-10 h-10 rounded-full bg-rose-100 flex items-center justify-center text-rose-500 shadow-inner group-hover:scale-105 transition-transform duration-300">
+          <i class="fa-solid fa-seedling text-lg"></i>
+        </div>
+        <div class="flex flex-col">
+          <span class="font-serif text-2xl font-bold tracking-tight text-neutral-800">Delfa Florist</span>
+          <span class="text-[10px] tracking-widest uppercase font-medium text-sage-700">Artisan Bloom Atelier</span>
+        </div>
+      </a>
+
+      <!-- Desktop Navigation Links -->
+      <nav class="hidden md:flex items-center gap-8 text-sm font-medium text-neutral-700">
+        <a href="#about" class="hover:text-rose-600 transition-colors">Tentang Kami</a>
+        <a href="#catalog" class="hover:text-rose-600 transition-colors">Koleksi Bunga</a>
+        <a href="#matchmaker" class="hover:text-rose-600 transition-colors flex items-center gap-1.5">
+          <span>Bouquet Matchmaker</span>
+          <span class="text-[10px] bg-rose-100 text-rose-700 px-2 py-0.5 rounded-full font-semibold">Paling Populer</span>
+        </a>
+        <a href="#card-generator" class="hover:text-rose-600 transition-colors">Tulis Kartu Ucapan</a>
+        <a href="#gallery" class="hover:text-rose-600 transition-colors">Galeri</a>
+      </nav>
+
+      <!-- Action Buttons -->
+      <div class="hidden sm:flex items-center gap-3">
+        <a href="https://www.instagram.com/delfaflorist_/" target="_blank" rel="noopener noreferrer" 
+           class="px-4 py-2 text-xs font-semibold tracking-wider text-neutral-700 bg-white/80 hover:bg-white rounded-full border border-neutral-200 shadow-sm transition-all hover:shadow hover:text-rose-600 flex items-center gap-2">
+          <i class="fa-brands fa-instagram text-rose-500"></i>
+          <span>@delfaflorist_</span>
+        </a>
+        <a href="#matchmaker" class="px-5 py-2.5 text-xs font-semibold tracking-wider text-white bg-sage-700 hover:bg-sage-800 rounded-full shadow-md hover:shadow-lg transition-all transform hover:-translate-y-0.5 flex items-center gap-2">
+          <i class="fa-solid fa-wand-magic-sparkles"></i>
+          <span>Pilih Rangkaian</span>
+        </a>
+      </div>
+
+      <!-- Mobile Hamburger Button -->
+      <button id="mobileMenuBtn" aria-label="Toggle Mobile Menu" class="md:hidden p-2 rounded-xl text-neutral-700 hover:bg-rose-50">
+        <i class="fa-solid fa-bars-staggered text-xl"></i>
+      </button>
+    </div>
+
+    <!-- Mobile Navigation Drawer -->
+    <div id="mobileMenu" class="hidden md:hidden glass-nav border-t border-rose-100 px-6 py-5 flex flex-col gap-4 text-sm font-medium">
+      <a href="#about" class="py-1 text-neutral-700 hover:text-rose-600">Tentang Kami</a>
+      <a href="#catalog" class="py-1 text-neutral-700 hover:text-rose-600">Koleksi Bunga</a>
+      <a href="#matchmaker" class="py-1 text-neutral-700 hover:text-rose-600">Bouquet Matchmaker</a>
+      <a href="#card-generator" class="py-1 text-neutral-700 hover:text-rose-600">Tulis Kartu Ucapan</a>
+      <a href="#gallery" class="py-1 text-neutral-700 hover:text-rose-600">Galeri & Testimoni</a>
+      <div class="pt-3 border-t border-rose-100 flex flex-col gap-2">
+        <a href="https://www.instagram.com/delfaflorist_/" target="_blank" class="w-full text-center py-2.5 rounded-full border border-neutral-300 text-xs font-semibold text-neutral-700">
+          <i class="fa-brands fa-instagram text-rose-500 mr-2"></i>Kunjungi Instagram @delfaflorist_
+        </a>
+        <a href="https://wa.me/6281234567890?text=Halo%20Delfa%20Florist,%20saya%20tertarik%20untuk%20memesan%20bunga" target="_blank" class="w-full text-center py-2.5 rounded-full bg-sage-700 text-white text-xs font-semibold shadow">
+          <i class="fa-brands fa-whatsapp mr-1 text-emerald-300"></i> Chat WhatsApp
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <main class="pt-24 lg:pt-28">
+    <section class="relative min-h-[85vh] flex items-center justify-center px-4 sm:px-6 lg:px-8 py-16 overflow-hidden">
+      <!-- Decorative ambient gradient spheres -->
+      <div class="absolute -top-10 -left-10 w-96 h-96 bg-rose-200/40 rounded-full blur-3xl pointer-events-none"></div>
+      <div class="absolute top-1/2 -right-16 w-80 h-80 bg-sage-200/40 rounded-full blur-3xl pointer-events-none"></div>
+
+      <div class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 items-center relative z-20">
+        <!-- Hero Text Column -->
+        <div class="lg:col-span-7 text-center lg:text-left space-y-6">
+          <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-rose-100/80 border border-rose-200/70 text-rose-900 text-xs font-medium tracking-wide shadow-sm">
+            <span class="flex h-2 w-2 rounded-full bg-rose-500 animate-ping"></span>
+            <span>Artisan Florist Fresh Everyday &bull; Pengiriman Cepat</span>
+          </div>
+
+          <h1 class="font-serif text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-neutral-900 leading-[1.18]">
+            Curated Blooms for <br>
+            <span class="italic font-normal text-rose-500 underline decoration-rose-200 decoration-wavy decoration-2">Unforgettable</span> Moments.
+          </h1>
+
+          <p class="text-neutral-600 text-base sm:text-lg max-w-xl mx-auto lg:mx-0 font-light leading-relaxed">
+            Setiap kelopak bunga dirangkai dengan penuh cinta dan rasa. Dari wisuda, hari jadi, lamaran hingga ungkapan rindu yang tulus bersama <strong>Delfa Florist</strong>.
+          </p>
+
+          <!-- Action Buttons -->
+          <div class="flex flex-wrap items-center justify-center lg:justify-start gap-4 pt-2">
+            <a href="#matchmaker" class="px-7 py-3.5 rounded-full bg-rose-500 hover:bg-rose-600 text-white font-medium text-sm shadow-lg hover:shadow-rose-300/50 transition-all transform hover:-translate-y-0.5 flex items-center gap-2.5">
+              <i class="fa-solid fa-wand-magic-sparkles"></i>
+              <span>Cari Bunga Sesuai Momen</span>
+            </a>
+            <a href="#catalog" class="px-6 py-3.5 rounded-full bg-white/90 hover:bg-white text-neutral-800 font-medium text-sm border border-neutral-200 shadow-sm hover:shadow transition-all flex items-center gap-2">
+              <i class="fa-solid fa-book-open text-sage-700"></i>
+              <span>Lihat Katalog Lengkap</span>
+            </a>
+          </div>
+
+          <!-- Social Proof Badges -->
+          <div class="pt-6 grid grid-cols-3 gap-4 border-t border-rose-100/70 max-w-md mx-auto lg:mx-0 text-center lg:text-left">
+            <div>
+              <p class="font-serif text-2xl font-bold text-neutral-800">5000+</p>
+              <p class="text-xs text-neutral-500">Momen Bahagia</p>
+            </div>
+            <div>
+              <p class="font-serif text-2xl font-bold text-neutral-800">100%</p>
+              <p class="text-xs text-neutral-500">Bunga Segar Pilihan</p>
+            </div>
+            <div>
+              <p class="font-serif text-2xl font-bold text-neutral-800">4.9 / 5</p>
+              <p class="text-xs text-neutral-500">Rating Kepuasan</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Hero Visual Showcase Column -->
+        <div class="lg:col-span-5 relative">
+          <div class="relative mx-auto w-72 sm:w-88 md:w-96 aspect-[4/5] rounded-[36px] overflow-hidden shadow-2xl border-4 border-white animate-float">
+            <img src="https://images.unsplash.com/photo-1561181286-d3fee7d55364?auto=format&fit=crop&w=800&q=80" 
+                 alt="Romantic Pastel Hand Bouquet by Delfa Florist" 
+                 class="w-full h-full object-cover">
+            <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
+            
+            <div class="absolute bottom-6 left-6 right-6 text-white">
+              <span class="inline-block px-3 py-1 bg-white/20 backdrop-blur-md rounded-full text-xs font-semibold mb-2">Signature Bouquet</span>
+              <h3 class="font-serif text-xl font-medium">The Parisian Pastel</h3>
+              <p class="text-xs text-rose-100 font-light mt-1">Eustoma, Ecuadorian Rose & Cotton Flower</p>
+            </div>
+          </div>
+
+          <!-- Floating Badges -->
+          <div class="absolute -bottom-6 -left-4 sm:left-4 glass-card p-3 sm:p-4 rounded-2xl shadow-xl flex items-center gap-3">
+            <div class="w-10 h-10 rounded-full bg-emerald-100 flex items-center justify-center text-emerald-600">
+              <i class="fa-solid fa-truck-fast"></i>
+            </div>
+            <div>
+              <p class="text-xs font-bold text-neutral-800">Same-Day Delivery</p>
+              <p class="text-[11px] text-neutral-500">Jaminan kesegaran utuh</p>
+            </div>
+          </div>
+
+          <div class="absolute top-8 -right-4 glass-card p-3 rounded-2xl shadow-lg flex items-center gap-2.5">
+            <div class="w-8 h-8 rounded-full bg-rose-100 flex items-center justify-center text-rose-500">
+              <i class="fa-solid fa-heart"></i>
+            </div>
+            <span class="text-xs font-semibold text-neutral-700 pr-1">Free Greeting Card</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="matchmaker" class="py-20 px-4 sm:px-6 lg:px-8 bg-petal/60 border-y border-rose-100/80 relative">
+      <div class="max-w-7xl mx-auto">
+        <div class="text-center max-w-2xl mx-auto mb-14">
+          <span class="text-xs font-bold uppercase tracking-widest text-sage-700 bg-sage-100 px-3 py-1 rounded-full">Interactive Feature</span>
+          <h2 class="font-serif text-3xl sm:text-4xl font-bold text-neutral-900 mt-3">Bouquet Matchmaker</h2>
+          <p class="text-neutral-600 text-sm sm:text-base mt-2">
+            Bingung memilih buket yang tepat? Tentukan momen, nuansa warna, dan budget Anda. Kami akan carikan rangkaian yang paling berkesan.
+          </p>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+          <!-- Selection Controls Column -->
+          <div class="lg:col-span-5 bg-white p-6 sm:p-8 rounded-3xl shadow-md border border-rose-100 space-y-6">
+            <!-- Occasion Selector -->
+            <div>
+              <label class="block text-xs font-bold uppercase tracking-wider text-neutral-600 mb-3">
+                <i class="fa-solid fa-calendar-heart text-rose-500 mr-1.5"></i> 1. Pilih Acara / Momen
+              </label>
+              <div class="grid grid-cols-2 gap-2" id="occasionGrid">
+                <button type="button" data-val="Wisuda / Graduation" class="filter-opt-btn active px-3 py-2.5 text-xs font-semibold rounded-xl border border-rose-200 bg-rose-50 text-rose-700 flex items-center justify-center gap-1.5 transition-all">
+                  <i class="fa-solid fa-graduation-cap"></i> Wisuda / Sidang
+                </button>
+                <button type="button" data-val="Romance & Anniversary" class="filter-opt-btn px-3 py-2.5 text-xs font-semibold rounded-xl border border-neutral-200 bg-white hover:bg-neutral-50 text-neutral-700 flex items-center justify-center gap-1.5 transition-all">
+                  <i class="fa-solid fa-heart"></i> Anniversary / Cinta
+                </button>
+                <button type="button" data-val="Birthday Celebration" class="filter-opt-btn px-3 py-2.5 text-xs font-semibold rounded-xl border border-neutral-200 bg-white hover:bg-neutral-50 text-neutral-700 flex items-center justify-center gap-1.5 transition-all">
+                  <i class="fa-solid fa-cake-candles"></i> Ulang Tahun
+                </button>
+                <button type="button" data-val="Engagement & Wedding" class="filter-opt-btn px-3 py-2.5 text-xs font-semibold rounded-xl border border-neutral-200 bg-white hover:bg-neutral-50 text-neutral-700 flex items-center justify-center gap-1.5 transition-all">
+                  <i class="fa-solid fa-ring"></i> Lamaran / Nikah
+                </button>
+              </div>
+            </div>
+
+            <!-- Color Palette Selector -->
+            <div>
+              <label class="block text-xs font-bold uppercase tracking-wider text-neutral-600 mb-3">
+                <i class="fa-solid fa-palette text-rose-500 mr-1.5"></i> 2. Nuansa Warna Utama
+              </label>
+              <div class="grid grid-cols-2 sm:grid-cols-4 gap-2" id="colorGrid">
+                <button type="button" data-val="Pastel Soft" class="color-opt-btn active p-2.5 rounded-xl border-2 border-rose-400 bg-rose-50 text-center flex flex-col items-center gap-1 text-xs font-semibold text-rose-900">
+                  <span class="w-5 h-5 rounded-full bg-gradient-to-tr from-pink-200 to-rose-300 shadow-inner"></span>
+                  Pastel Soft
+                </button>
+                <button type="button" data-val="Romantic Red" class="color-opt-btn p-2.5 rounded-xl border border-neutral-200 bg-white text-center flex flex-col items-center gap-1 text-xs font-semibold text-neutral-700">
+                  <span class="w-5 h-5 rounded-full bg-gradient-to-tr from-rose-600 to-red-800 shadow-inner"></span>
+                  Deep Red
+                </button>
+                <button type="button" data-val="Pure White" class="color-opt-btn p-2.5 rounded-xl border border-neutral-200 bg-white text-center flex flex-col items-center gap-1 text-xs font-semibold text-neutral-700">
+                  <span class="w-5 h-5 rounded-full bg-gradient-to-tr from-neutral-100 to-slate-200 border border-neutral-300 shadow-inner"></span>
+                  Pure White
+                </button>
+                <button type="button" data-val="Warm Peach" class="color-opt-btn p-2.5 rounded-xl border border-neutral-200 bg-white text-center flex flex-col items-center gap-1 text-xs font-semibold text-neutral-700">
+                  <span class="w-5 h-5 rounded-full bg-gradient-to-tr from-amber-200 to-orange-300 shadow-inner"></span>
+                  Warm Peach
+                </button>
+              </div>
+            </div>
+
+            <!-- Budget Range Slider -->
+            <div>
+              <div class="flex justify-between items-center mb-2">
+                <label class="text-xs font-bold uppercase tracking-wider text-neutral-600">
+                  <i class="fa-solid fa-coins text-rose-500 mr-1.5"></i> 3. Estimasi Budget
+                </label>
+                <span id="budgetValue" class="text-xs font-bold text-sage-800 bg-sage-100 px-2.5 py-0.5 rounded-full">Rp 350.000</span>
+              </div>
+              <input type="range" id="budgetRange" min="150000" max="1200000" step="50000" value="350000" class="w-full h-2 bg-neutral-200 rounded-lg appearance-none cursor-pointer accent-sage-700">
+              <div class="flex justify-between text-[11px] text-neutral-400 mt-1">
+                <span>Rp 150rb (Simple)</span>
+                <span>Rp 600rb+ (Deluxe)</span>
+                <span>Rp 1.2jt+ (Luxury)</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Dynamic Result Recommendation Card -->
+          <div class="lg:col-span-7">
+            <div id="recommendationResult" class="glass-card rounded-3xl p-6 sm:p-8 shadow-xl border border-white transition-all duration-500 relative overflow-hidden">
+              <!-- Content rendered via JavaScript -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="catalog" class="py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+      <div class="flex flex-col md:flex-row md:items-end justify-between mb-12">
+        <div>
+          <span class="text-xs font-bold uppercase tracking-widest text-rose-500 bg-rose-100 px-3 py-1 rounded-full">Our Floral Gallery</span>
+          <h2 class="font-serif text-3xl sm:text-4xl font-bold text-neutral-900 mt-3">Katalog Pilihan Delfa</h2>
+          <p class="text-neutral-600 text-sm mt-1">Dibuat secara teliti dengan kombinasi bunga segar lokal dan impor.</p>
+        </div>
+
+        <!-- Catalog Category Filter Pills -->
+        <div class="flex flex-wrap gap-2 mt-6 md:mt-0" id="catalogFilters">
+          <button data-cat="all" class="cat-pill active px-4 py-2 rounded-full text-xs font-semibold bg-neutral-900 text-white shadow transition-all">Semua Koleksi</button>
+          <button data-cat="hand-bouquet" class="cat-pill px-4 py-2 rounded-full text-xs font-semibold bg-white text-neutral-700 hover:bg-neutral-100 border border-neutral-200 transition-all">Hand Bouquet</button>
+          <button data-cat="bloom-box" class="cat-pill px-4 py-2 rounded-full text-xs font-semibold bg-white text-neutral-700 hover:bg-neutral-100 border border-neutral-200 transition-all">Bloom Box</button>
+          <button data-cat="standing-flower" class="cat-pill px-4 py-2 rounded-full text-xs font-semibold bg-white text-neutral-700 hover:bg-neutral-100 border border-neutral-200 transition-all">Standing Flower</button>
+          <button data-cat="vase" class="cat-pill px-4 py-2 rounded-full text-xs font-semibold bg-white text-neutral-700 hover:bg-neutral-100 border border-neutral-200 transition-all">Table Vase</button>
+        </div>
+      </div>
+
+      <!-- Catalog Grid Items -->
+      <div id="catalogGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <!-- Products populated dynamically by JS for smooth filtering -->
+      </div>
+    </section>
+
+    <section id="card-generator" class="py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-petal to-cream border-t border-rose-100">
+      <div class="max-w-4xl mx-auto">
+        <div class="text-center mb-10">
+          <div class="w-12 h-12 mx-auto rounded-full bg-rose-100 flex items-center justify-center text-rose-500 mb-3 text-xl">
+            <i class="fa-solid fa-envelope-open-text"></i>
+          </div>
+          <span class="text-xs font-bold uppercase tracking-widest text-sage-700">Complementary Perk</span>
+          <h2 class="font-serif text-3xl sm:text-4xl font-bold text-neutral-900 mt-2">Asisten Kartu Ucapan</h2>
+          <p class="text-neutral-600 text-sm mt-2">
+            Setiap pemesanan di Delfa Florist sudah termasuk kartu ucapan premium gratis. Gunakan generator ini untuk merangkai kata-kata terbaik.
+          </p>
+        </div>
+
+        <div class="bg-white rounded-3xl p-6 sm:p-10 shadow-xl border border-rose-100 space-y-6">
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+            <div>
+              <label class="block text-xs font-semibold text-neutral-600 mb-1">Nama Penerima</label>
+              <input type="text" id="recipientName" placeholder="Contoh: Bella / Sayang" class="w-full px-4 py-2.5 rounded-xl border border-neutral-200 focus:border-rose-400 focus:ring-2 focus:ring-rose-100 outline-none text-sm">
+            </div>
+            <div>
+              <label class="block text-xs font-semibold text-neutral-600 mb-1">Dari Siapa</label>
+              <input type="text" id="senderName" placeholder="Nama Anda" class="w-full px-4 py-2.5 rounded-xl border border-neutral-200 focus:border-rose-400 focus:ring-2 focus:ring-rose-100 outline-none text-sm">
+            </div>
+            <div>
+              <label class="block text-xs font-semibold text-neutral-600 mb-1">Gaya Tulisan (Tone)</label>
+              <select id="messageTone" class="w-full px-4 py-2.5 rounded-xl border border-neutral-200 focus:border-rose-400 focus:ring-2 focus:ring-rose-100 outline-none text-sm bg-white">
+                <option value="romantic">Romantis & Puitis</option>
+                <option value="graduation">Wisuda & Penuh Doa</option>
+                <option value="birthday">Ulang Tahun Hangat</option>
+                <option value="formal">Formal / Penghormatan</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="relative">
+            <label class="block text-xs font-semibold text-neutral-600 mb-1">Hasil Naskah Kartu Ucapan</label>
+            <div class="relative">
+              <textarea id="generatedCardMsg" rows="4" class="w-full p-4 font-serif text-neutral-800 italic bg-petal/40 rounded-2xl border border-rose-200 focus:outline-none focus:ring-2 focus:ring-rose-200 text-base leading-relaxed resize-none" readonly></textarea>
+              <button id="copyCardBtn" class="absolute bottom-3 right-3 px-3 py-1.5 rounded-lg bg-neutral-900 hover:bg-neutral-800 text-white text-xs font-medium flex items-center gap-1.5 transition-all shadow">
+                <i class="fa-regular fa-copy"></i>
+                <span id="copyBtnText">Salin Teks</span>
+              </button>
+            </div>
+          </div>
+
+          <div class="flex flex-wrap items-center justify-between pt-2 gap-4">
+            <button id="regenerateMsgBtn" class="text-xs font-semibold text-rose-600 hover:text-rose-700 flex items-center gap-1.5 py-1">
+              <i class="fa-solid fa-arrows-rotate"></i>
+              <span>Acak Variasi Kata Lain</span>
+            </button>
+            <button id="attachToOrderBtn" class="px-5 py-2.5 rounded-xl bg-sage-700 hover:bg-sage-800 text-white text-xs font-semibold flex items-center gap-2 shadow transition-all">
+              <i class="fa-brands fa-whatsapp text-emerald-300"></i>
+              <span>Gunakan Pesan Ini Saat Chat WhatsApp</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="gallery" class="py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+      <div class="text-center max-w-2xl mx-auto mb-14">
+        <span class="text-xs font-bold uppercase tracking-widest text-neutral-500">Social Showcase</span>
+        <h2 class="font-serif text-3xl sm:text-4xl font-bold text-neutral-900 mt-2">Momen di @delfaflorist_</h2>
+        <p class="text-neutral-600 text-sm mt-2">Lihat karya rangkaian terbaru dan kepuasan pelanggan kami langsung dari Instagram feed.</p>
+      </div>
+
+      <!-- Instagram Mock Grid -->
+      <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6">
+        <a href="https://www.instagram.com/delfaflorist_/" target="_blank" class="group relative rounded-2xl overflow-hidden aspect-square shadow-sm">
+          <img src="https://images.unsplash.com/photo-1526047932273-341f2a7631f9?auto=format&fit=crop&w=600&q=80" alt="Delfa Florist Feed" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+          <div class="absolute inset-0 bg-neutral-950/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center text-white gap-4">
+            <span><i class="fa-solid fa-heart mr-1 text-rose-400"></i> 432</span>
+            <span><i class="fa-brands fa-instagram"></i></span>
+          </div>
+        </a>
+
+        <a href="https://www.instagram.com/delfaflorist_/" target="_blank" class="group relative rounded-2xl overflow-hidden aspect-square shadow-sm">
+          <img src="https://images.unsplash.com/photo-1582794543139-8ac9cb0f7b11?auto=format&fit=crop&w=600&q=80" alt="Delfa Florist Feed" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+          <div class="absolute inset-0 bg-neutral-950/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center text-white gap-4">
+            <span><i class="fa-solid fa-heart mr-1 text-rose-400"></i> 621</span>
+            <span><i class="fa-brands fa-instagram"></i></span>
+          </div>
+        </a>
+
+        <a href="https://www.instagram.com/delfaflorist_/" target="_blank" class="group relative rounded-2xl overflow-hidden aspect-square shadow-sm">
+          <img src="https://images.unsplash.com/photo-1508610048659-a06b669e3321?auto=format&fit=crop&w=600&q=80" alt="Delfa Florist Feed" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+          <div class="absolute inset-0 bg-neutral-950/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center text-white gap-4">
+            <span><i class="fa-solid fa-heart mr-1 text-rose-400"></i> 890</span>
+            <span><i class="fa-brands fa-instagram"></i></span>
+          </div>
+        </a>
+
+        <a href="https://www.instagram.com/delfaflorist_/" target="_blank" class="group relative rounded-2xl overflow-hidden aspect-square shadow-sm">
+          <img src="https://images.unsplash.com/photo-1533616688419-b7a585564566?auto=format&fit=crop&w=600&q=80" alt="Delfa Florist Feed" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+          <div class="absolute inset-0 bg-neutral-950/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center text-white gap-4">
+            <span><i class="fa-solid fa-heart mr-1 text-rose-400"></i> 542</span>
+            <span><i class="fa-brands fa-instagram"></i></span>
+          </div>
+        </a>
+      </div>
+
+      <!-- Testimonials Carousel -->
+      <div class="mt-16 grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div class="p-6 rounded-3xl bg-white border border-rose-100 shadow-sm flex flex-col justify-between">
+          <div>
+            <div class="flex text-amber-400 text-xs mb-3">
+              <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+            </div>
+            <p class="text-neutral-700 text-sm italic font-serif">"Buket wisuda untuk sahabat saya sangat rapi dan bunganya harum segar banget! Rangkaian bunganya estetik persis seperti di Instagram."</p>
+          </div>
+          <div class="mt-6 flex items-center gap-3 border-t border-neutral-100 pt-4">
+            <div class="w-8 h-8 rounded-full bg-rose-200 text-rose-800 font-bold text-xs flex items-center justify-center">AN</div>
+            <div>
+              <p class="text-xs font-semibold text-neutral-800">Alya Nurhaliza</p>
+              <p class="text-[10px] text-neutral-400">Wisuda UI &bull; Verified Order</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="p-6 rounded-3xl bg-white border border-rose-100 shadow-sm flex flex-col justify-between">
+          <div>
+            <div class="flex text-amber-400 text-xs mb-3">
+              <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+            </div>
+            <p class="text-neutral-700 text-sm italic font-serif">"Pesan dadakan H-1 anniversary tetap dilayani dengan sangat ramah. Pengiriman aman tanpa ada tangkai yang layu. Istri saya bahagia sekali!"</p>
+          </div>
+          <div class="mt-6 flex items-center gap-3 border-t border-neutral-100 pt-4">
+            <div class="w-8 h-8 rounded-full bg-sage-200 text-sage-800 font-bold text-xs flex items-center justify-center">RS</div>
+            <div>
+              <p class="text-xs font-semibold text-neutral-800">Reza Saputra</p>
+              <p class="text-[10px] text-neutral-400">Anniversary Bouquet &bull; Verified Order</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="p-6 rounded-3xl bg-white border border-rose-100 shadow-sm flex flex-col justify-between">
+          <div>
+            <div class="flex text-amber-400 text-xs mb-3">
+              <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+            </div>
+            <p class="text-neutral-700 text-sm italic font-serif">"Bloom box-nya mewah banget buat hadiah grand opening resto rekan kerja. Kartu ucapannya juga dicetak cantik dan rapi."</p>
+          </div>
+          <div class="mt-6 flex items-center gap-3 border-t border-neutral-100 pt-4">
+            <div class="w-8 h-8 rounded-full bg-champagne text-amber-900 font-bold text-xs flex items-center justify-center">CW</div>
+            <div>
+              <p class="text-xs font-semibold text-neutral-800">Clara Wijaya</p>
+              <p class="text-[10px] text-neutral-400">Bloom Box Order &bull; Corporate Client</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="bg-neutral-900 text-neutral-300 pt-16 pb-12 border-t border-neutral-800">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-4 gap-10">
+      <div class="space-y-4 md:col-span-2">
+        <div class="flex items-center gap-2 text-white">
+          <i class="fa-solid fa-seedling text-rose-400 text-2xl"></i>
+          <span class="font-serif text-2xl font-bold tracking-tight">Delfa Florist</span>
+        </div>
+        <p class="text-xs text-neutral-400 leading-relaxed max-w-sm">
+          Menciptakan rangkaian bunga segar artisan untuk momen-momen paling bermakna dalam hidup Anda. Setiap rangkaian dibuat dengan dedikasi dan cinta bunga sejati.
+        </p>
+        <div class="flex items-center gap-4 text-neutral-400 pt-2">
+          <a href="https://www.instagram.com/delfaflorist_/" target="_blank" class="w-9 h-9 rounded-full bg-neutral-800 hover:bg-rose-600 hover:text-white flex items-center justify-center transition-all">
+            <i class="fa-brands fa-instagram"></i>
+          </a>
+          <a href="https://wa.me/6281234567890" target="_blank" class="w-9 h-9 rounded-full bg-neutral-800 hover:bg-emerald-600 hover:text-white flex items-center justify-center transition-all">
+            <i class="fa-brands fa-whatsapp"></i>
+          </a>
+        </div>
+      </div>
+
+      <div>
+        <h4 class="text-xs font-bold uppercase tracking-wider text-white mb-4">Layanan Cepat</h4>
+        <ul class="text-xs space-y-2.5 text-neutral-400">
+          <li><a href="#catalog" class="hover:text-white transition-colors">Graduation Bouquet</a></li>
+          <li><a href="#catalog" class="hover:text-white transition-colors">Bridal Bouquet & Corsage</a></li>
+          <li><a href="#catalog" class="hover:text-white transition-colors">Bloom Box Mewah</a></li>
+          <li><a href="#catalog" class="hover:text-white transition-colors">Table Vase & Centerpieces</a></li>
+          <li><a href="#catalog" class="hover:text-white transition-colors">Custom Flower Request</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h4 class="text-xs font-bold uppercase tracking-wider text-white mb-4">Pemesanan & Konsultasi</h4>
+        <p class="text-xs text-neutral-400 mb-2 leading-relaxed">
+          Punya konsep buket khusus atau tema tertentu? Chat florist kami langsung:
+        </p>
+        <a href="https://wa.me/6281234567890?text=Halo%20Delfa%20Florist,%20saya%20ingin%20konsultasi%20bunga%20custom" target="_blank" class="inline-flex items-center gap-2 px-4 py-2.5 rounded-full bg-emerald-700 hover:bg-emerald-600 text-white text-xs font-semibold transition-all">
+          <i class="fa-brands fa-whatsapp text-sm"></i>
+          <span>Chat WhatsApp Sekarang</span>
+        </a>
+      </div>
+    </div>
+
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-12 pt-6 border-t border-neutral-800/80 text-center text-[11px] text-neutral-500">
+      &copy; <span id="currentYear"></span> Delfa Florist (@delfaflorist_). All rights reserved. Crafted for memorable blooms.
+    </div>
+  </footer>
+
+  <!-- Floating Direct WhatsApp Button -->
+  <div class="fixed bottom-6 right-6 z-50 flex items-center gap-3">
+    <div class="hidden sm:block glass-card px-3.5 py-2 rounded-2xl shadow-xl border border-rose-200 text-xs font-medium text-neutral-800 animate-pulse">
+      🌸 Konsultasi & Pesan Cepat
+    </div>
+    <a href="https://wa.me/6281234567890?text=Halo%20Delfa%20Florist,%20saya%20ingin%20tanya%20seputar%20bunga" target="_blank" class="w-14 h-14 rounded-full bg-emerald-500 hover:bg-emerald-600 text-white shadow-2xl flex items-center justify-center text-2xl transition-all transform hover:scale-110 active:scale-95">
+      <i class="fa-brands fa-whatsapp"></i>
+    </a>
+  </div>
+
+  <!-- Product Detail Modal -->
+  <div id="productModal" class="fixed inset-0 z-50 bg-black/50 backdrop-blur-sm hidden items-center justify-center p-4">
+    <div class="bg-white rounded-3xl max-w-xl w-full overflow-hidden shadow-2xl relative border border-rose-100 animate-float">
+      <button id="closeModalBtn" class="absolute top-4 right-4 z-10 w-9 h-9 rounded-full bg-white/80 hover:bg-white text-neutral-700 flex items-center justify-center shadow">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+      <div id="modalContent"></div>
+    </div>
+  </div>
+
+  <!-- Notification Toast -->
+  <div id="toastNotification" class="fixed top-24 right-6 z-50 glass-card px-4 py-3 rounded-2xl shadow-xl border border-emerald-200 text-emerald-800 text-xs font-semibold flex items-center gap-2 transition-all transform translate-y-[-20px] opacity-0 pointer-events-none">
+    <i class="fa-solid fa-circle-check text-emerald-600 text-base"></i>
+    <span id="toastMsg">Teks berhasil disalin!</span>
+  </div>
+
+  <script>
+    // Set Year
+    document.getElementById('currentYear').textContent = new Date().getFullYear();
+
+    // Toggle Mobile Navigation
+    const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+    const mobileMenu = document.getElementById('mobileMenu');
+    mobileMenuBtn.addEventListener('click', () => {
+      mobileMenu.classList.toggle('hidden');
+    });
+
+    // Petal Particle Simulation on HTML5 Canvas
+    const canvas = document.getElementById('petalCanvas');
+    const ctx = canvas.getContext('2d');
+    let petals = [];
+    const petalColors = ['#fecdd3', '#ffe4e6', '#fbcfe8', '#fce7f3', '#fff1f2'];
+
+    function resizeCanvas() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    }
+    window.addEventListener('resize', resizeCanvas);
+    resizeCanvas();
+
+    class Petal {
+      constructor() {
+        this.reset();
+      }
+      reset() {
+        this.x = Math.random() * canvas.width;
+        this.y = Math.random() * -canvas.height;
+        this.size = Math.random() * 8 + 6;
+        this.speedY = Math.random() * 1.2 + 0.6;
+        this.speedX = (Math.random() - 0.5) * 1;
+        this.rotation = Math.random() * 360;
+        this.rotSpeed = (Math.random() - 0.5) * 1.5;
+        this.color = petalColors[Math.floor(Math.random() * petalColors.length)];
+        this.opacity = Math.random() * 0.5 + 0.3;
+      }
+      update() {
+        this.y += this.speedY;
+        this.x += this.speedX + Math.sin(this.y * 0.01) * 0.5;
+        this.rotation += this.rotSpeed;
+        if (this.y > canvas.height + 20 || this.x < -20 || this.x > canvas.width + 20) {
+          this.reset();
+          this.y = -10;
+        }
+      }
+      draw() {
+        ctx.save();
+        ctx.translate(this.x, this.y);
+        ctx.rotate((this.rotation * Math.PI) / 180);
+        ctx.globalAlpha = this.opacity;
+        ctx.fillStyle = this.color;
+        
+        // Draw petal shape
+        ctx.beginPath();
+        ctx.moveTo(0, 0);
+        ctx.bezierCurveTo(-this.size / 2, -this.size, -this.size, this.size / 2, 0, this.size * 1.2);
+        ctx.bezierCurveTo(this.size, this.size / 2, this.size / 2, -this.size, 0, 0);
+        ctx.fill();
+        ctx.restore();
+      }
+    }
+
+    function initPetals() {
+      petals = [];
+      const count = window.innerWidth < 768 ? 25 : 55;
+      for (let i = 0; i < count; i++) {
+        const p = new Petal();
+        p.y = Math.random() * canvas.height;
+        petals.push(p);
+      }
+    }
+    initPetals();
+
+    function animatePetals() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      petals.forEach(p => {
+        p.update();
+        p.draw();
+      });
+      requestAnimationFrame(animatePetals);
+    }
+    animatePetals();
+
+    // Catalog Products Database
+    const catalogProducts = [
+      {
+        id: 1,
+        title: "Blushing Rose Romance",
+        category: "hand-bouquet",
+        price: "Rp 375.000",
+        rawPrice: 375000,
+        occasion: "Romance & Anniversary",
+        tone: "Pastel Soft",
+        desc: "Kombinasi mawar soft pink premium, baby breath, dan daun eucalyptus dengan balutan kertas wrapping matte premium.",
+        image: "https://images.unsplash.com/photo-1561181286-d3fee7d55364?auto=format&fit=crop&w=700&q=80"
+      },
+      {
+        id: 2,
+        title: "Crimson Velvet Deluxe",
+        category: "hand-bouquet",
+        price: "Rp 450.000",
+        rawPrice: 450000,
+        occasion: "Romance & Anniversary",
+        tone: "Romantic Red",
+        desc: "Mawar merah beludru khas Ecuador yang melambangkan cinta abadi, dipadukan ruscus hijau segar.",
+        image: "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=700&q=80"
+      },
+      {
+        id: 3,
+        title: "Golden Hour Bloom Box",
+        category: "bloom-box",
+        price: "Rp 550.000",
+        rawPrice: 550000,
+        occasion: "Birthday Celebration",
+        tone: "Warm Peach",
+        desc: "Kotak silinder suede mewah berisi kombinasi gerbera peach, carnation oranye lembut, dan mawar pastel.",
+        image: "https://images.unsplash.com/photo-1526047932273-341f2a7631f9?auto=format&fit=crop&w=700&q=80"
+      },
+      {
+        id: 4,
+        title: "Seraphic Graduation Bouquet",
+        category: "hand-bouquet",
+        price: "Rp 295.000",
+        rawPrice: 295000,
+        occasion: "Wisuda / Graduation",
+        tone: "Pastel Soft",
+        desc: "Dirancang khusus untuk wisuda dengan boneka teddy beruang opsional, bunga kapas, dan mawar pink cerah.",
+        image: "https://images.unsplash.com/photo-1533616688419-b7a585564566?auto=format&fit=crop&w=700&q=80"
+      },
+      {
+        id: 5,
+        title: "Pure Grace Standing Frame",
+        category: "standing-flower",
+        price: "Rp 850.000",
+        rawPrice: 850000,
+        occasion: "Engagement & Wedding",
+        tone: "Pure White",
+        desc: "Standing akrilik modern berhias mawar putih, lily casablanca, dan anggrek dendrobium putih untuk ucapan pembukaan.",
+        image: "https://images.unsplash.com/photo-1508610048659-a06b669e3321?auto=format&fit=crop&w=700&q=80"
+      },
+      {
+        id: 6,
+        title: "Elegance Table Vase",
+        category: "vase",
+        price: "Rp 420.000",
+        rawPrice: 420000,
+        occasion: "Engagement & Wedding",
+        tone: "Warm Peach",
+        desc: "Vas keramik Nordic estetik dengan paduan bunga tulip, mawar peach, dan foliage harum segar.",
+        image: "https://images.unsplash.com/photo-1582794543139-8ac9cb0f7b11?auto=format&fit=crop&w=700&q=80"
+      },
+      {
+        id: 7,
+        title: "Ivory Cloud Hand Bouquet",
+        category: "hand-bouquet",
+        price: "Rp 320.000",
+        rawPrice: 320000,
+        occasion: "Wisuda / Graduation",
+        tone: "Pure White",
+        desc: "Keanggunan monokrom mawar putih salju dan baby breath padat dengan wrapping pita satin gold.",
+        image: "https://images.unsplash.com/photo-1494955870715-979ca4f13bf0?auto=format&fit=crop&w=700&q=80"
+      },
+      {
+        id: 8,
+        title: "Royal Scarlet Bloom Box",
+        category: "bloom-box",
+        price: "Rp 680.000",
+        rawPrice: 680000,
+        occasion: "Romance & Anniversary",
+        tone: "Romantic Red",
+        desc: "Bloom box eksklusif 24 mawar merah tua dengan hiasan pita velvet dan laci rahasia untuk kartu / cokelat.",
+        image: "https://images.unsplash.com/photo-1563245372-f21724e3856d?auto=format&fit=crop&w=700&q=80"
+      }
+    ];
+
+    // Render Catalog Items
+    function renderCatalog(filter = 'all') {
+      const grid = document.getElementById('catalogGrid');
+      const filtered = filter === 'all' 
+        ? catalogProducts 
+        : catalogProducts.filter(item => item.category === filter);
+
+      grid.innerHTML = filtered.map(item => `
+        <div class="group bg-white rounded-3xl p-3 border border-rose-100 shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col justify-between">
+          <div class="relative rounded-2xl overflow-hidden aspect-[4/5] mb-3">
+            <img src="${item.image}" alt="${item.title}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+            <span class="absolute top-3 left-3 bg-white/80 backdrop-blur-md text-[10px] uppercase tracking-wider font-bold text-neutral-800 px-2.5 py-1 rounded-full">
+              ${item.category.replace('-', ' ')}
+            </span>
+          </div>
+          <div class="px-2 pb-2">
+            <h3 class="font-serif text-lg font-semibold text-neutral-900 group-hover:text-rose-600 transition-colors">${item.title}</h3>
+            <p class="text-xs text-neutral-500 line-clamp-2 mt-1">${item.desc}</p>
+            <div class="flex items-center justify-between mt-4 pt-3 border-t border-neutral-100">
+              <span class="font-serif font-bold text-sm text-sage-800">${item.price}</span>
+              <button onclick="openProductModal(${item.id})" class="px-3 py-1.5 rounded-full bg-rose-50 hover:bg-rose-100 text-rose-700 text-xs font-semibold transition-all">
+                Detail & Order
+              </button>
+            </div>
+          </div>
+        </div>
+      `).join('');
+    }
+    renderCatalog();
+
+    // Catalog Filter Pills Handlers
+    document.querySelectorAll('.cat-pill').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        document.querySelectorAll('.cat-pill').forEach(b => {
+          b.classList.remove('bg-neutral-900', 'text-white');
+          b.classList.add('bg-white', 'text-neutral-700');
+        });
+        btn.classList.add('bg-neutral-900', 'text-white');
+        btn.classList.remove('bg-white', 'text-neutral-700');
+        renderCatalog(btn.dataset.cat);
+      });
+    });
+
+    // Bouquet Matchmaker State & Logic
+    let matchmakerState = {
+      occasion: "Wisuda / Graduation",
+      tone: "Pastel Soft",
+      budget: 350000
+    };
+
+    const occasionBtns = document.querySelectorAll('#occasionGrid .filter-opt-btn');
+    occasionBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        occasionBtns.forEach(b => {
+          b.classList.remove('border-rose-400', 'bg-rose-50', 'text-rose-700');
+          b.classList.add('border-neutral-200', 'bg-white', 'text-neutral-700');
+        });
+        btn.classList.add('border-rose-400', 'bg-rose-50', 'text-rose-700');
+        btn.classList.remove('border-neutral-200', 'bg-white', 'text-neutral-700');
+        matchmakerState.occasion = btn.dataset.val;
+        updateRecommendation();
+      });
+    });
+
+    const colorBtns = document.querySelectorAll('#colorGrid .color-opt-btn');
+    colorBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        colorBtns.forEach(b => {
+          b.classList.remove('border-rose-400', 'bg-rose-50', 'text-rose-900', 'border-2');
+          b.classList.add('border-neutral-200', 'bg-white', 'text-neutral-700', 'border');
+        });
+        btn.classList.add('border-rose-400', 'bg-rose-50', 'text-rose-900', 'border-2');
+        btn.classList.remove('border-neutral-200', 'bg-white', 'text-neutral-700', 'border');
+        matchmakerState.tone = btn.dataset.val;
+        updateRecommendation();
+      });
+    });
+
+    const budgetInput = document.getElementById('budgetRange');
+    const budgetValueDisplay = document.getElementById('budgetValue');
+    budgetInput.addEventListener('input', (e) => {
+      const val = parseInt(e.target.value);
+      matchmakerState.budget = val;
+      budgetValueDisplay.textContent = 'Rp ' + val.toLocaleString('id-ID');
+      updateRecommendation();
+    });
+
+    function updateRecommendation() {
+      // Find matching product with soft fallback
+      let matched = catalogProducts.find(p => p.occasion === matchmakerState.occasion && p.tone === matchmakerState.tone);
+      if (!matched) {
+        matched = catalogProducts.find(p => p.tone === matchmakerState.tone) || catalogProducts[0];
+      }
+
+      const meaningMap = {
+        "Pastel Soft": "Simbol kelembutan hati, apresiasi tulus, dan kehangatan masa depan.",
+        "Romantic Red": "Simbol cinta membara, gairah yang kuat, dan rasa hormat yang mendalam.",
+        "Pure White": "Simbol ketulusan murni, awal yang baru, kedamaian, dan kepolosan abadi.",
+        "Warm Peach": "Simbol rasa syukur, persahabatan hangat, antusiasme, dan sukacita."
+      };
+
+      const waText = encodeURIComponent(`Halo Delfa Florist (@delfaflorist_)! Saya mencoba fitur Bouquet Matchmaker di web Anda:\n- Acara: ${matchmakerState.occasion}\n- Tone Warna: ${matchmakerState.tone}\n- Budget Saya: Rp ${matchmakerState.budget.toLocaleString('id-ID')}\n- Rangkaian Rekomendasi: ${matched.title}\n\nApakah model ini ready untuk dipesan?`);
+
+      const resultBox = document.getElementById('recommendationResult');
+      resultBox.innerHTML = `
+        <div class="grid grid-cols-1 md:grid-cols-12 gap-6 items-center">
+          <div class="md:col-span-5 rounded-2xl overflow-hidden aspect-[4/5] shadow-md border-2 border-white">
+            <img src="${matched.image}" alt="${matched.title}" class="w-full h-full object-cover">
+          </div>
+          <div class="md:col-span-7 space-y-4">
+            <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-sage-100 text-sage-800 text-xs font-semibold">
+              <i class="fa-solid fa-sparkles text-amber-500"></i> Rekomendasi Terbaik Untuk Anda
+            </div>
+            <h3 class="font-serif text-2xl font-bold text-neutral-900">${matched.title}</h3>
+            <p class="text-xs text-neutral-600 leading-relaxed">${matched.desc}</p>
+            
+            <div class="bg-rose-50/70 p-3.5 rounded-xl border border-rose-100">
+              <p class="text-[11px] font-bold text-rose-800 uppercase tracking-wider mb-1"><i class="fa-solid fa-feather-pointed mr-1"></i> Filosofi Rangkaian</p>
+              <p class="text-xs text-neutral-600 italic font-serif">"${meaningMap[matchmakerState.tone] || 'Dirangkai spesial untuk momen Anda.'}"</p>
+            </div>
+
+            <div class="pt-2 flex items-center justify-between">
+              <div>
+                <span class="text-[10px] text-neutral-500 uppercase tracking-wider">Estimasi Harga</span>
+                <p class="font-serif text-xl font-bold text-rose-600">${matched.price}</p>
+              </div>
+              <a href="https://wa.me/6281234567890?text=${waText}" target="_blank" class="px-5 py-2.5 rounded-full bg-sage-700 hover:bg-sage-800 text-white text-xs font-semibold shadow-md flex items-center gap-2 transition-all">
+                <i class="fa-brands fa-whatsapp text-emerald-300"></i>
+                <span>Pesan Buket Ini</span>
+              </a>
+            </div>
+          </div>
+        </div>
+      `;
+    }
+    updateRecommendation();
+
+    // AI Card Greeting Assistant Logic
+    const messageTemplates = {
+      romantic: [
+        "Untuk {to},\nSetiap kelopak bunga ini membawa separuh dari rasa sayangku yang tak pernah pudar. Terima kasih telah selalu menjadi warna terindah dalam hidupku.\n\nDengan cinta,\n{from}",
+        "Untuk {to},\nMawar ini indah, tapi senyummu jauh lebih memikat. Selamat merayakan hari spesial kita, semoga langkah kita senantiasa bergandengan.\n\nPeluk hangat,\n{from}"
+      ],
+      graduation: [
+        "Selamat atas kelulusanmu, {to}!\nPerjuangan dan kerja kerasmu akhirnya berbuah manis hari ini. Semoga gelar barumu membawamu ke gerbang kesuksesan yang lebih gemilang.\n\nBangga padamu,\n{from}",
+        "Happy Graduation, {to}!\nSemoga ilmu yang didapat menjadi berkah dan jalan pembuka untuk mimpi-mimpi besarmu berikutnya.\n\nSalam hangat,\n{from}"
+      ],
+      birthday: [
+        "Selamat Ulang Tahun, {to}!\nSemoga di usia yang baru ini, setiap harimu selalu dipenuhi tawa, kesehatan, dan impian yang satu per satu terwujud.\n\nDoa terbaik selalu,\n{from}",
+        "Happy Birthday, {to}!\nTerima kasih telah menjadi pribadi yang begitu hangat dan menyenangkan. Nikmati harimu yang luar biasa ini!\n\nSahabatmu,\n{from}"
+      ],
+      formal: [
+        "Kepada Yth. {to},\nSelamat dan sukses atas pencapaian luar biasa ini. Semoga kesuksesan senantiasa menyertai setiap langkah dan karya Anda ke depan.\n\nHormat kami,\n{from}",
+        "Kepada {to},\nTerima kasih yang sebesar-besarnya atas kerjasama dan dedikasi yang terjalin. Semoga hubungan baik ini terus berkembang harmonis.\n\nSalam takzim,\n{from}"
+      ]
+    };
+
+    let templateIdx = 0;
+    function updateCardMessage() {
+      const recipient = document.getElementById('recipientName').value.trim() || 'Teman / Tersayang';
+      const sender = document.getElementById('senderName').value.trim() || 'Sahabatmu';
+      const tone = document.getElementById('messageTone').value;
+      const templates = messageTemplates[tone];
+      
+      const currentTpl = templates[templateIdx % templates.length];
+      const rendered = currentTpl.replace(/{to}/g, recipient).replace(/{from}/g, sender);
+      document.getElementById('generatedCardMsg').value = rendered;
+    }
+
+    document.getElementById('recipientName').addEventListener('input', updateCardMessage);
+    document.getElementById('senderName').addEventListener('input', updateCardMessage);
+    document.getElementById('messageTone').addEventListener('change', () => {
+      templateIdx = 0;
+      updateCardMessage();
+    });
+    document.getElementById('regenerateMsgBtn').addEventListener('click', () => {
+      templateIdx++;
+      updateCardMessage();
+    });
+    updateCardMessage();
+
+    // Copy Greeting to Clipboard
+    const copyBtn = document.getElementById('copyCardBtn');
+    copyBtn.addEventListener('click', () => {
+      const textarea = document.getElementById('generatedCardMsg');
+      textarea.select();
+      document.execCommand('copy');
+      showToast("Pesan kartu ucapan berhasil disalin!");
+    });
+
+    // Attach Greeting Message to WhatsApp Link
+    document.getElementById('attachToOrderBtn').addEventListener('click', () => {
+      const cardMsg = document.getElementById('generatedCardMsg').value;
+      const waText = encodeURIComponent(`Halo Delfa Florist (@delfaflorist_), saya ingin order bunga dan mohon cetakkan kartu ucapan berikut:\n\n"${cardMsg}"`);
+      window.open(`https://wa.me/6281234567890?text=${waText}`, '_blank');
+    });
+
+    // Toast Notification Helper
+    function showToast(message) {
+      const toast = document.getElementById('toastNotification');
+      document.getElementById('toastMsg').textContent = message;
+      toast.classList.remove('opacity-0', 'translate-y-[-20px]', 'pointer-events-none');
+      toast.classList.add('opacity-100', 'translate-y-0');
+      setTimeout(() => {
+        toast.classList.add('opacity-0', 'translate-y-[-20px]', 'pointer-events-none');
+        toast.classList.remove('opacity-100', 'translate-y-0');
+      }, 3000);
+    }
+
+    // Modal Details Helper
+    const modal = document.getElementById('productModal');
+    const modalContent = document.getElementById('modalContent');
+    const closeModalBtn = document.getElementById('closeModalBtn');
+
+    function openProductModal(id) {
+      const product = catalogProducts.find(p => p.id === id);
+      if (!product) return;
+      const waText = encodeURIComponent(`Halo Delfa Florist (@delfaflorist_), saya ingin memesan "${product.title}" seharga ${product.price}. Apakah bisa diproses hari ini?`);
+
+      modalContent.innerHTML = `
+        <div class="grid grid-cols-1 md:grid-cols-2">
+          <div class="h-64 md:h-full">
+            <img src="${product.image}" alt="${product.title}" class="w-full h-full object-cover">
+          </div>
+          <div class="p-6 md:p-8 flex flex-col justify-between space-y-4">
+            <div>
+              <span class="text-[10px] font-bold uppercase tracking-wider text-rose-500 bg-rose-50 px-2.5 py-1 rounded-full">${product.category.replace('-', ' ')}</span>
+              <h3 class="font-serif text-2xl font-bold text-neutral-900 mt-2">${product.title}</h3>
+              <p class="font-serif text-lg font-bold text-sage-800 mt-1">${product.price}</p>
+              <p class="text-xs text-neutral-600 mt-3 leading-relaxed">${product.desc}</p>
+              
+              <div class="mt-4 pt-4 border-t border-neutral-100 text-xs text-neutral-500 space-y-1.5">
+                <p><i class="fa-solid fa-circle-check text-emerald-500 mr-2"></i> Free Kartu Ucapan Custom</p>
+                <p><i class="fa-solid fa-circle-check text-emerald-500 mr-2"></i> Wrapping & Ribbon Premium</p>
+                <p><i class="fa-solid fa-circle-check text-emerald-500 mr-2"></i> Foto Hasil Rangkaian Sebelum Dikirim</p>
+              </div>
+            </div>
+
+            <div class="pt-4 flex flex-col gap-2">
+              <a href="https://wa.me/6281234567890?text=${waText}" target="_blank" class="w-full py-3 rounded-full bg-emerald-600 hover:bg-emerald-700 text-white font-semibold text-xs text-center flex items-center justify-center gap-2 shadow-md transition-all">
+                <i class="fa-brands fa-whatsapp text-lg"></i>
+                <span>Order via WhatsApp Sekarang</span>
+              </a>
+              <button onclick="closeProductModal()" class="w-full py-2 text-xs font-semibold text-neutral-500 hover:text-neutral-700 text-center">
+                Tutup Jendela
+              </button>
+            </div>
+          </div>
+        </div>
+      `;
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
+    }
+
+    function closeProductModal() {
+      modal.classList.add('hidden');
+      modal.classList.remove('flex');
+    }
+
+    closeModalBtn.addEventListener('click', closeProductModal);
+    modal.addEventListener('click', (e) => {
+      if (e.target === modal) closeProductModal();
+    });
+  </script>
+</body>
+</html>
